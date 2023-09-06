@@ -1,0 +1,43 @@
+use IMPORSECURITY
+
+
+***Para crear llaves foraneas***
+
+ALTER TABLE Usuarios
+ADD FOREIGN KEY (Id_Rol) REFERENCES Roles(Id_Rol);
+
+ALTER TABLE Orden_Compra
+ADD FOREIGN KEY (Id_Usuario) REFERENCES Usuarios(Id_Usuario);
+
+ALTER TABLE Orden_Compra
+ADD FOREIGN KEY (Id_Producto) REFERENCES Productos(Id_Producto);
+
+ALTER TABLE Productos
+ADD FOREIGN KEY (Id_Categoria) REFERENCES Categoria_Producto(Id);
+
+ALTER TABLE Productos
+ADD FOREIGN KEY (Id_Proveedor) REFERENCES Proveedores(Id_Proveedor);
+
+ALTER TABLE Factura
+ADD FOREIGN KEY (Id_Orden) REFERENCES Orden_Compra(Id_Orden);
+
+ALTER TABLE Factura
+ADD FOREIGN KEY (Id_Metodo_Pago) REFERENCES Metodo_Pago(Id_Metodo_Pago);
+
+****VSCommunity
+Para conectar la DB Imporsecurity con el servidor*****
+Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutPut Models
+
+Adicionar servicios en  Programs.cs para cargar la DB
+builder.Services.AddDbContext<ImporsecurityContext>(options => options.UseSqlServer("Server=DESKTOP-ALMS\\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connetion=true; MultipleActiveResultSets=true"));
+
+****VSCode Angular 
+<app-root> </app-root> es un selector para pruebas unitarias que validan fallos dentro de app.component.ts
+
+ng serve
+ng build  compila una app
+en carpeta componentes
+ng g c Header (css, html y ts)
+ng add @angular/material
+ng add @angular/cdk
+ng generate @angular/material:navigation Menu
