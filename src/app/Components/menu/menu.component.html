@@ -1,3 +1,5 @@
+
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -5,11 +7,12 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Nosotros</a>
-      <a mat-list-item href="#">Productos</a>
-      <a mat-list-item href="#">Nuestros Clientes</a>
-      <a mat-list-item href="#">Contáctenos</a>
-      <a mat-list-item href="#">Crea tu cuenta</a>
+      <a mat-list-item href="/Nosotros">Nosotros</a>
+      <a mat-list-item href="/Productos">Productos</a>
+      <a mat-list-item href="/NuestrosClientes">Nuestros Clientes</a>
+      <a mat-list-item href="/Contactenos">Contáctenos</a>
+      <a mat-list-item href="/CreaTuCuenta">Crea tu cuenta</a>
+      <a mat-list-item href="/Product">Product</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -23,11 +26,20 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>IMPORSECURITY <H4> Ofreciendo seguridad en las vías</H4></span>
+      <ngx-avatars class="my-avatar" name="D P" value="28%" size="50" [round]="true"></ngx-avatars>
+      
+      
     </mat-toolbar>
+    
     <!-- Add Content Here -->
-    <app-productos></app-productos>
+    <router-outlet></router-outlet>
+    
+    <!--<app-productos></app-productos>
     <app-nosotros></app-nosotros>
     <app-crea-tu-cuenta></app-crea-tu-cuenta>
+    <app-nuestros-clientes></app-nuestros-clientes>-->
 
   </mat-sidenav-content>
+  
+
 </mat-sidenav-container>

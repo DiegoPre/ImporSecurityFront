@@ -31,13 +31,106 @@ Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=IMPORSECURITY; Trus
 Adicionar servicios en  Programs.cs para cargar la DB
 builder.Services.AddDbContext<ImporsecurityContext>(options => options.UseSqlServer("Server=DESKTOP-ALMS\\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connetion=true; MultipleActiveResultSets=true"));
 
+
 ****VSCode Angular 
 <app-root> </app-root> es un selector para pruebas unitarias que validan fallos dentro de app.component.ts
-
-ng serve
+Crear carpeta proyecto
+CMD del proyecto
+npm i
+ng new name (crear proyecto)
+ng serve	(abrir servidor localhost:4200)
 ng build  compila una app
-en carpeta componentes
-ng g c Header (css, html y ts)
+crea carpeta Components en app (click derecho New Folder)
+cd .\src\app\Components> para estar en el directorio componentes
+luego genera los componentes por terminal con:
+
+ng g c (nombreComponente) (css, html y ts) para cada componente
 ng add @angular/material
 ng add @angular/cdk
-ng generate @angular/material:navigation Menu
+ng generate @angular/material:navigation menu
+
+En menu.component.html  
+linea 8 <a mat-list-item href="/Mascota">Mascota</a>
+linea 25 pegar <router-outlet></router-outlet>
+
+En app-routing.modules.ts
+Linea 8 {path:"Mascota",component:MascotasComponent},
+
+En app.component.html
+<app-menu></app-menu>
+<H2>{{title}}</H2>
+En app.component.ts
+Linea 9 title = 'Parcial1 DIEGO PRE';  Stream Interpolation
+
+
+ng generate @angular/material:table tableClientes   nuestrosClientes
+ng generate @angular/material:address-form registrar  formulario de contactenos 
+
+Crear carpeta Service desde app
+>ng g s api desde la carpeta Services
+
+en Rest.services.ts se debe import { HttpClient } from '@angular/common/http';
+se agrega constructor en dentro de export class RestService
+linea 10  constructor(public api: HttpClient) { }
+	public async Get (){
+    	  await this.api.get("https://localhost:7152/api/Productoes").toPromise().then((res=>{
+     	   console.log(res);}))
+  	} 
+En app.module.ts se agrega
+import { HttpClientModule } from '@angular/common/http';
+En @NgModule({ abajo de imports:[
+se adiciona HttpClientModule,
+]
+Luego en el componente.ts en la class agrega la interface implements OnInit, luego parandose en OnInit hace Ctrl + punto y agrega la importación
+import { Component, OnInit } from '@angular/core';
+Luego en el mismo modulo dentro de la clase en linea 10, crea un constructor escribiendo ctro
+constructor(public api: ApiService){}
+ngOnInit(): void {
+   
+    this.api.Get();
+  }
+se carga el ng serve y se verifica en localhost, click derecho/ inspeccionar y selecciona consola.
+
+En angular se implemanta el metodo OnInit que es una interface que permite establecer que todo lo que se haga en ese interface
+ lo crear en el momento que se llama el componente antes de renderizarlo y tenga la información disponible. 
+
+
+to propmise es para estar pendiente y tener acceso a estar sincronizado 100% de cualquier cambio del servicoo get, 
+esta constantemente vigilando cualquier cambio que haya para informar,
+
+Tiene un metodo then, entonces que desea hacer (se crea una variable momentanea para que imprima la respuesta por consola.
+Para que funcione el get de manera independiente y sincrónica, se utiliza el metodo async para traer información y se le dá una espera del retorno con await
+
+funciones asincronas y tipos de promesas que existe
+
+Cors protocolo a nivel de seguridad cuando hay un servidor no cualquiera puede utilizar esos servicios y la solución es ir al servidor y suscribir los clientes que si pueden utilizar los servicios
+En VSCommunity en Programs.cs linea 32 se configura app.UseCors() para gestionar la petición que nos hace clientes externos
+En linea 6 se realiza la sgte configuración 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200"
+                                ).AllowAnyHeader()
+                                                    .AllowAnyMethod();
+        });
+});
+
+
+
+
+
+***Program.cs****
+app.UseCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200"
+                                ).AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});

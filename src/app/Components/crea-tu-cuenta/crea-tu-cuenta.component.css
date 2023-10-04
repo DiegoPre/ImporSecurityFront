@@ -8,3 +8,10 @@ body {
 h3{
     color: blue;
 }
+#miContenedor {
+    border: 2px solid #333; /* Borde sólido de 2 píxeles de ancho de color gris oscuro */
+    padding: 20px; /* Espaciado interno de 20 píxeles */
+    margin: 20px; /* Margen externo de 20 píxeles */
+    background-color: #f0f0f0; /* Color de fondo gris claro */
+    border-radius: 10px; /* Bordes redondeados de 10 píxeles */
+}
