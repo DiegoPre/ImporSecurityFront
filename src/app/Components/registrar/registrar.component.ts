@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import Swal from 'sweetalert2';
 
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -8,19 +9,21 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './registrar.component.html',
   styleUrls: ['./registrar.component.css']
 })
+
 export class RegistrarComponent {
   private fb = inject(FormBuilder);
+
   addressForm = this.fb.group({
     company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
+    nombre: ["", Validators.required],
+    apellido: ["", Validators.required],
+    idUsuario: ["", Validators.required],
+    direccion: ["", Validators.required],
+    ciudad: ["", Validators.required],
+    pais: ["", Validators.required],
+    telefono: ["", Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
+    email: ["", [Validators.email, Validators.pattern]],
+       
     shipping: ['free', Validators.required]
   });
 
@@ -89,6 +92,12 @@ export class RegistrarComponent {
   ];
 
   onSubmit(): void {
-    alert('Thanks!');
+     Swal.fire(
+    'Good job!',
+    'You clicked the button!',
+    'success'
+  );
   }
+  
+ 
 }

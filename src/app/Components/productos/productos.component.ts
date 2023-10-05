@@ -12,7 +12,7 @@ import { RestService } from 'src/app/Services/rest.service';
 
 export class ProductosComponent implements OnInit, AfterViewInit{
   titulo="BEST SELLER"
-  displayedColumns: string[] = ['nombreCategoria', 'nombreProducto', 'descripcion', 'origen', 'precioVenta'];
+  displayedColumns: string[] = [];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -24,9 +24,11 @@ export class ProductosComponent implements OnInit, AfterViewInit{
 
   ngOnInit(): void {
     this.api.Get("Productoes").then((res)=>{
+      this.loadTable(res)
       this.dataSource.data=res
     })
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort = this.sort;    
@@ -38,6 +40,8 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       this.displayedColumns.push(column);
     }
     this.displayedColumns.push('Acciones');
+    console.log("this.displayedColumns");
+    
   }
 
   applyFilter(event: Event) {
@@ -47,5 +51,13 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  editar(){
+    console.log('cambiar dato');
+  }
+  
+  borrar(){
+    console.log('borrar dato');
   }
 }
