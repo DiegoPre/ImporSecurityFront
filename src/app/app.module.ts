@@ -21,13 +21,18 @@ import { TableClientesComponent } from './Components/table-clientes/table-client
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { RegistrarComponent } from './Components/registrar/registrar.component';
+import { RegistrarComponent } from './Components/Forms/registrar/registrar.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './Components/product/product.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RegistrarProductComponent } from './Components/Forms/registrar-product/registrar-product.component';
+import { RegistrarCatProductComponent } from './Components/Forms/registrar-cat-product/registrar-cat-product.component';
+import { RegistrarOrdenCompraComponent } from './Components/Forms/registrar-orden-compra/registrar-orden-compra.component';
+import { RegistrarProveedorComponent } from './Components/Forms/registrar-proveedor/registrar-proveedor.component';
 
 @NgModule({
   declarations: [
@@ -41,9 +46,14 @@ import { ProductComponent } from './Components/product/product.component';
     TableClientesComponent,
     RegistrarComponent,
     ProductComponent,
+    RegistrarProductComponent,
+    RegistrarCatProductComponent,
+    RegistrarOrdenCompraComponent,
+    RegistrarProveedorComponent,
   ],
   imports: [
     BrowserModule,
+    MatDialogModule,
     HttpClientModule,
     AvatarModule,
     AppRoutingModule,
@@ -60,7 +70,7 @@ import { ProductComponent } from './Components/product/product.component';
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

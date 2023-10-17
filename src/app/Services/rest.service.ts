@@ -20,7 +20,6 @@ export class RestService {
     })
     return response;
   }
-
 //post
   public async Post(controlador:string, objet:any){
     return await this.api.post(this.Ulr+controlador, objet).subscribe((res)=>{});

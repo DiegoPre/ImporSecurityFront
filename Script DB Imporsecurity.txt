@@ -25,11 +25,20 @@ ALTER TABLE Factura
 ADD FOREIGN KEY (Id_Metodo_Pago) REFERENCES Metodo_Pago(Id_Metodo_Pago);
 
 ****VSCommunity
-Para conectar la DB Imporsecurity con el servidor*****
+
+Para conectar la DB Imporsecurity con el servidor ingresamos a la Terminal***** en Ver/Otras Ventanas/Consola de admon de paquetes
 Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutPut Models
 
 Adicionar servicios en  Programs.cs para cargar la DB
 builder.Services.AddDbContext<ImporsecurityContext>(options => options.UseSqlServer("Server=DESKTOP-ALMS\\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connetion=true; MultipleActiveResultSets=true"));
+
+***Si se requiere modificar Entidades de la DB, entonces en el Backend
+-Se eliminan la carpeta Models
+-En Program.cs se comentarea la linea 1 //using ETITC.Models; y el //builder.Services.AddDbContext<ImporsecurityContext>(options => options.UseSqlServer("Server=DESKTOP-ALMS\\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connetion=true; MultipleActiveResultSets=true"));
+-La carpeta Controllers se Excluir del proyecto con click derecho
+-En la Solución del proyecto Limpiar solución
+-En la Solución del proyecto Recompilar solución
+-Luego en Consola Admon de paquetes realizar el Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutPut Models
 
 
 ****VSCode Angular 
@@ -63,8 +72,8 @@ En app.component.ts
 Linea 9 title = 'Parcial1 DIEGO PRE';  Stream Interpolation
 
 
-ng generate @angular/material:table tableClientes   nuestrosClientes
-ng generate @angular/material:address-form registrar  formulario de contactenos 
+ng generate @angular/material:table tableClientes   para crear tablas nuestrosClientes
+ng generate @angular/material:address-form registrar  para crearformulario de contactenos 
 
 Crear carpeta Service desde app
 >ng g s api desde la carpeta Services
@@ -134,3 +143,46 @@ builder.Services.AddCors(options =>
                                 .AllowAnyMethod();
         });
 });
+
+
+<div matColumnDef="{{disCol}}" *ngFor= "let disCol of displayedColumns">
+            <div *ngIf= "disCol != 'Acciones'">    <!--si disCol es diferente a la palabra acciones agregre lo que viene desde DB -->
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ disCol }} </th>
+                <td mat-cell *matCellDef= "let row"> {{ row[disCol] }} </td>
+            </div>
+            
+            <div *ngIf= "disCol == 'Acciones'"> <!--si disCol es igual a Acciones agregue un th con Nombre y agregue los iconos a la columna-->
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{disCol}} </th>
+                <td mat-cell *matCellDef= "let row">
+            <a href=""> <i class="fa-solid fa-trash"></i></a>
+            <a href=""> <i class="fa-solid fa-trash"></i></a>
+                    
+                </td>
+            </div>
+        </div> 
+
+
+***************************************************************
+Para validar el envio del formulario
+submitForm() {
+  if (this.miFormulario.valid) {
+    // Lógica de envío del formulario cuando es válido
+    console.log('Formulario válido. Enviar datos...');
+  } else {
+    // Marcar campos como tocados para mostrar mensajes de error
+    this.markFormGroupTouched(this.miFormulario);
+    console.log('Formulario inválido. Revise los mensajes de error.');
+  }
+}
+
+private markFormGroupTouched(formGroup: FormGroup) {
+  (Object as any).values(formGroup.controls).forEach(control => {
+    control.markAsTouched();
+
+    if (control instanceof FormGroup) {
+      this.markFormGroupTouched(control);
+    }
+  });
+}
+*********************************************************************
+

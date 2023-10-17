@@ -1,29 +1,26 @@
 import { Component, inject } from '@angular/core';
-import Swal from 'sweetalert2';
 
 import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-registrar',
-  templateUrl: './registrar.component.html',
-  styleUrls: ['./registrar.component.css']
+  selector: 'app-registrar-orden-compra',
+  templateUrl: './registrar-orden-compra.component.html',
+  styleUrls: ['./registrar-orden-compra.component.css']
 })
-
-export class RegistrarComponent {
+export class RegistrarOrdenCompraComponent {
   private fb = inject(FormBuilder);
-
   addressForm = this.fb.group({
     company: null,
-    nombre: ["", Validators.required],
-    apellido: ["", Validators.required],
-    idUsuario: ["", Validators.required],
-    direccion: ["", Validators.required],
-    ciudad: ["", Validators.required],
-    pais: ["", Validators.required],
-    telefono: ["", Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
-    email: ["", [Validators.email, Validators.pattern]],
-       
+    firstName: [null, Validators.required],
+    lastName: [null, Validators.required],
+    address: [null, Validators.required],
+    address2: null,
+    city: [null, Validators.required],
+    state: [null, Validators.required],
+    postalCode: [null, Validators.compose([
+      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
+    ],
     shipping: ['free', Validators.required]
   });
 
@@ -92,12 +89,6 @@ export class RegistrarComponent {
   ];
 
   onSubmit(): void {
-     Swal.fire(
-    'Good job!',
-    'You clicked the button!',
-    'success'
-  );
+    alert('Thanks!');
   }
-  
- 
 }
