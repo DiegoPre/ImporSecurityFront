@@ -1,4 +1,4 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="ProductosForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>Crear nuevo producto </mat-card-title>
@@ -13,7 +13,7 @@
                 {{ Categoria.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="addressForm.controls['nombreCategoria'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['nombreCategoria'].hasError('required')">
               Seleccione una Categoria, es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -21,7 +21,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder=" Referencia del Producto" formControlName="idProducto">
-            <mat-error *ngIf="addressForm.controls['idProducto'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['idProducto'].hasError('required')">
               La Referencia del producto es <strong>obligatoria</strong>
             </mat-error>
           </mat-form-field>
@@ -32,7 +32,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder=" Nombre del Producto" formControlName="nombreProducto">
-            <mat-error *ngIf="addressForm.controls['nombreProducto'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['nombreProducto'].hasError('required')">
               El nombre del producto es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -40,7 +40,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder=" Marca del Producto" formControlName="marca">
-            <mat-error *ngIf="addressForm.controls['marca'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['marca'].hasError('required')">
               La marca del producto es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -51,7 +51,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <textarea matInput placeholder="Descripción del Producto" formControlName="descripcion"></textarea>
-            <mat-error *ngIf="addressForm.controls['descripcion'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['descripcion'].hasError('required')">
               La descripción es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -62,7 +62,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Fabricado en" formControlName="origen">
-            <mat-error *ngIf="addressForm.controls['origen'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['origen'].hasError('required')">
               El origen es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -70,7 +70,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Precio Venta" type="number" formControlName="precioVenta">
-            <mat-error *ngIf="addressForm.controls['precioVenta'].hasError('required')">
+            <mat-error *ngIf="ProductosForm.controls['precioVenta'].hasError('required')">
               El Precio de venta es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>

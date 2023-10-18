@@ -47,8 +47,9 @@ export class NuestrosClientesComponent implements OnInit, AfterViewInit {
   }
 
   openDialog() {
+    
     const dialogRef = this.dialog.open(RegistrarComponent);
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(res => {        
       console.log(`Dialog result: ${res}`);
     });
   }

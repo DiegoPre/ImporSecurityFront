@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import Swal from 'sweetalert2';
 import { FormBuilder, Validators } from '@angular/forms';
+import { RestService } from 'src/app/Services/rest.service';
+import { UsuariosModel } from 'src/app/Models/UsuariosModel';
 
 
 @Component({
@@ -10,10 +12,29 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 
 export class RegistrarComponent {
-  hide = true; 
-  private fb = inject(FormBuilder);
 
-  addressForm = this.fb.group({
+  constructor(private fb: FormBuilder, public api: RestService ) {
+        
+  }
+
+  infoUsuarios: UsuariosModel = {
+    IdUsuario: 0,
+    TipoDocumento: "",
+    IdRol: 0,
+    Nombre: "",
+    Apellido: "",
+    Direccion: "",
+    Ciudad: "",
+    Pais: "",
+    Telefono: "",
+    Email: "",
+    Password:"",
+    //FechaCumpleanos:"",
+  }
+  
+  hide = true; 
+  //private fb = inject(FormBuilder);
+  UsuariosForm = this.fb.group({
     company: null,
     nombre: ["", Validators.required],
     apellido: ["", Validators.required],
@@ -24,19 +45,31 @@ export class RegistrarComponent {
     telefono: ["", Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
     email: ["", [Validators.required, Validators.email, Validators.pattern ]],
     password: ["", Validators.required] , 
-    shipping: ['free', Validators.required]
+    
   });
 
   hasUnitNumber = false;
 
  
-
   onSubmit(): void {
-     Swal.fire(
-    'Good job!',
-    'You clicked the button!',
-    'success'
-  );
+    if(this.UsuariosForm.valid){
+      
+      
+      
+
+      this.api.Post("Usuario",this.UsuariosForm)
+
+      
+      
+    }else{
+      Swal.fire(
+        'Debe ingresar los datos requeridos!',
+        'Complete la información!',
+        'error'
+      );
+
+    }
+    alert('Thanks!');
   }
   
  

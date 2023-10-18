@@ -38,7 +38,7 @@ export class ProductosComponent implements OnInit, AfterViewInit{
 
   openDialog(){
     this.dialog.open(RegistrarProductComponent,{
-      width:'650px',  
+      width:'850px',  
     });
   }
 

@@ -1,16 +1,49 @@
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+head{ padding: 0; margin: 0;
+}form{ max-width: 250em; margin: 1em auto;}
+
+html, body { height: 100%; }
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+#miContenedor {
+    border: 2px solid #333; /* Borde sólido de 2 píxeles de ancho de color gris oscuro */
+    padding: 20px; /* Espaciado interno de 20 píxeles */
+    margin: 20px; /* Margen externo de 20 píxeles */
+    background-color: #f0f0f0; /* Color de fondo gris claro */
+    border-radius: 10px; /* Bordes redondeados de 10 píxeles */
+}
+
+table {
+    width: 100%;
+  }
+  .opcion {
+    color: red;
+    padding: 2px;
+    border: 1px;
+  }
+  button {
+    position: sticky;
+    background: rgb(223, 182, 182);
+    color: blue;
+  }
+
+  .agregar{
+    padding: 10px;
+    margin: 10px;
+  }
+
 .full-width {
   width: 100%;
 }
 
 .shipping-card {
-  min-width: 120px;
+  min-width: 220px;
   margin: 20px auto;
 }
 
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
-}
 
 .row {
   display: flex;
