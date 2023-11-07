@@ -6,6 +6,11 @@ import { RestService } from 'src/app/Services/rest.service';
 //import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RegistrarProductComponent } from '../Forms/registrar-product/registrar-product.component';
+import { ProductosModel } from 'src/app/Models/ProductosModel';
+import Swal from 'sweetalert2';
+import { ProductoService } from 'src/app/Services/Modal/producto.service';
+import { BehaviorSubject } from 'rxjs';
+
 
 
 
@@ -17,26 +22,31 @@ import { RegistrarProductComponent } from '../Forms/registrar-product/registrar-
 })
 
 export class ProductosComponent implements OnInit, AfterViewInit{
-  titulo="BEST SELLER"
+  titulos="BEST SELLER"
   displayedColumns: string[] = [];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
-  constructor(public api: RestService, public dialog: MatDialog ) {
+  constructor(public api: RestService, public dialog: MatDialog, public productService: ProductoService) {
         
   }
+  titulo=""
+  accion="Registrar Producto"
+
 
   ngOnInit(): void {
-    this.api.Get("Productoes").then((res)=>{
+      this.api.Get("Productoes").then((res)=>{
       this.loadTable(res)
       this.dataSource.data=res
       
     })
   }
-
+  // OpenDialog abre una ventana de un formulario vacio, y con el modal se trae un titulo y el nombre del submit para hacer un post
   openDialog(){
+    this.productService.titulo = "Crear nuevo Producto"
+    this.productService.accion.next("Crear Producto")
     this.dialog.open(RegistrarProductComponent,{
       width:'850px',  
     });
@@ -46,17 +56,15 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort = this.sort;    
   }
-
+  //genera el contenido de la tabla de acuerdo a lo que recibe del backend .NET
   loadTable(data:any[]){
     this.displayedColumns=[];
     for (let column in data[0]){
       this.displayedColumns.push(column);
     }
     this.displayedColumns.push('Acciones');
-    console.log("this.displayedColumns");
-    
+    console.log("this.displayedColumns");    
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -65,13 +73,48 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
   }
-
-
-  editar(element){
-    console.log('cambiar dato');
+  //debe traer el formulario con los datos del registro y habilitado para ser editado, se trae el título y la acción de hacer un PUT
+  editar(element: any){
+    const Id = element.IdProducto;
+    this.productService.accion.next("Editar Producto")
+      this.productService.titulo="Editar Producto"
+      this.productService.producto = element
+      this.dialog.open(RegistrarProductComponent, {
+        height: 'auto',
+        width: 'auto'
+      });       
+   
   }
-  
-  borrar(element){
-    console.log('borrar dato');
-  }
+     
+        
+  async borrar(element: ProductosModel){
+    const Id = element.IdProducto;
+    console.log(Id);
+
+    Swal.fire({
+      title: 'Está seguro de eliminar este registro?',
+      text: "Esta acción es irreversible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.api.Delete("Productoes", String(Id)).then((res) => {
+          console.log(res);        
+        });
+        if(element !== undefined ){
+              
+        }  
+        Swal.fire(
+          'Eliminado!',
+          'El registro ha sido eliminado.',
+          'success'
+        )
+      }
+    })
+    
+  }  
+
 }

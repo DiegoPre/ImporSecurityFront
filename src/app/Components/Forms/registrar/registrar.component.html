@@ -31,6 +31,22 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="number" matInput placeholder="Tipo de Documento" formControlName="TipoDocumento">
+            <mat-error *ngIf="UsuariosForm.controls['TipoDocumento'].hasError('required')">
+              El tipo de documento es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="number" matInput placeholder="No. Identificación" formControlName="idUsuario">
+            <mat-error *ngIf="UsuariosForm.controls['idUsuario'].hasError('required')">
+              El No. identificación es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
 
       <div class="row">

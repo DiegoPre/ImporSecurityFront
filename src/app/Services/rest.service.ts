@@ -11,6 +11,7 @@ export class RestService {
   constructor(public api: HttpClient) { }
   
   Ulr="https://localhost:7152/api/"
+  
 //get
   public async Get(controlador:string){
     var response:any
@@ -30,9 +31,14 @@ export class RestService {
     return await this.api.put(this.Ulr+controlador+"/"+ id, objet);
       
   }
+  
   //Delete
   public async Delete(controlador:string, id: string){
-    return await this.api.delete(this.Ulr+controlador+"/"+ id);
-      
+    var response: any
+    return await this.api.delete(this.Ulr+controlador+"/"+ id).toPromise().then((res =>{
+      response = res;
+    }))
+    return response;
+          
   }
 }

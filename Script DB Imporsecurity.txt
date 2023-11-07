@@ -24,10 +24,35 @@ ADD FOREIGN KEY (Id_Orden) REFERENCES Orden_Compra(Id_Orden);
 ALTER TABLE Factura
 ADD FOREIGN KEY (Id_Metodo_Pago) REFERENCES Metodo_Pago(Id_Metodo_Pago);
 
+*************crear registros********************
+  -- Inserta datos en la tabla [Productos]
+INSERT INTO [IMPORSECURITY].[dbo].[Productos] (
+    [Id_Producto],
+    [Id_Categoria],
+    [Id_Proveedor],
+    [Nombre_Producto],
+    [Descripcion],
+    [Marca],
+    [Origen],
+    [Cantidad],
+    [Precio_Compra],
+    [Precio_Venta],
+    [Descuento_Producto],
+    [Valor_Impuesto],
+    [Size],
+    [Imagen]
+)
+VALUES
+    ('S217', 7, 'CH01', 'Módulo Perimetral', 'Luces Perimetrales', 'Signal', 'China', 10, 130000.00, 160000.00, 0.00, 0.19, '', ''),
+    ('SS770', 13, 'US01', 'Sirena Manual 5 tonos', 'Equipo de perifoneo', 'Signal', 'USA', 20, 800000.00, 920000.00, 0.00, 0.19, '', '');
+    -- Agrega más filas de datos aquí
+    ('1000', 3, 'US01', 'Producto 1', 'Descripción 1', 'Signal', 'Origen 3', 5, 50.00, 80.00, 0.02, 0.19, 'S', 'imagen1000.jpg');
+
 ****VSCommunity
 
 Para conectar la DB Imporsecurity con el servidor ingresamos a la Terminal***** en Ver/Otras Ventanas/Consola de admon de paquetes
 Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutPut Models
+Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=Parcial1; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutPut Models
 
 Adicionar servicios en  Programs.cs para cargar la DB
 builder.Services.AddDbContext<ImporsecurityContext>(options => options.UseSqlServer("Server=DESKTOP-ALMS\\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connetion=true; MultipleActiveResultSets=true"));
@@ -75,7 +100,8 @@ Linea 9 title = 'Parcial1 DIEGO PRE';  Stream Interpolation
 ng generate @angular/material:table tableClientes   para crear tablas nuestrosClientes
 ng generate @angular/material:address-form registrar  para crearformulario de contactenos 
 
-Crear carpeta Service desde app
+Crear carpeta Services desde app
+>ng g s [nombre] desde la carpeta Services
 >ng g s api desde la carpeta Services
 
 en Rest.services.ts se debe import { HttpClient } from '@angular/common/http';
@@ -105,7 +131,7 @@ En angular se implemanta el metodo OnInit que es una interface que permite estab
 
 
 to propmise es para estar pendiente y tener acceso a estar sincronizado 100% de cualquier cambio del servicoo get, 
-esta constantemente vigilando cualquier cambio que haya para informar,
+esta constantemente vigilando cualquier cambio que haya para informar, espera una sola vez,
 
 Tiene un metodo then, entonces que desea hacer (se crea una variable momentanea para que imprima la respuesta por consola.
 Para que funcione el get de manera independiente y sincrónica, se utiliza el metodo async para traer información y se le dá una espera del retorno con await
@@ -113,6 +139,8 @@ Para que funcione el get de manera independiente y sincrónica, se utiliza el me
 funciones asincronas y tipos de promesas que existe
 
 Cors protocolo a nivel de seguridad cuando hay un servidor no cualquiera puede utilizar esos servicios y la solución es ir al servidor y suscribir los clientes que si pueden utilizar los servicios
+
+*******************Para el back En .NET VSCommunity*********
 En VSCommunity en Programs.cs linea 32 se configura app.UseCors() para gestionar la petición que nos hace clientes externos
 En linea 6 se realiza la sgte configuración 
 
@@ -123,7 +151,7 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:4200"
                                 ).AllowAnyHeader()
-                                                    .AllowAnyMethod();
+                                 .AllowAnyMethod();
         });
 });
 
@@ -145,6 +173,10 @@ builder.Services.AddCors(options =>
 });
 
 
+
+
+***************************************************************
+En Componente .html
 <div matColumnDef="{{disCol}}" *ngFor= "let disCol of displayedColumns">
             <div *ngIf= "disCol != 'Acciones'">    <!--si disCol es diferente a la palabra acciones agregre lo que viene desde DB -->
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ disCol }} </th>
@@ -162,7 +194,6 @@ builder.Services.AddCors(options =>
         </div> 
 
 
-***************************************************************
 Para validar el envio del formulario
 submitForm() {
   if (this.miFormulario.valid) {
@@ -185,4 +216,154 @@ private markFormGroupTouched(formGroup: FormGroup) {
   });
 }
 *********************************************************************
+1. Ejecuta el siguiente comando para cambiar temporalmente la política de ejecución
+	Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+2. Ejecutar nuevamente tu comando Angular:
+	ng add @angular/material
+3.  restaurar la política de ejecución a su estado original con el siguiente comando:
+	Set-ExecutionPolicy -Scope Process -ExecutionPolicy Default
+**********************************************************************
+PARCIAL1-2CORTE
+DB SQL
+TRUNCATE TABLE Parcial1.dbo.Comida;
+GO
+DROP TABLE dbo.Comida;
+TRUNCATE TABLE Parcial1.dbo.Mascotas;
+GO
+DROP TABLE dbo.Mascotas;
+TRUNCATE TABLE Parcial1.dbo.Propietario;
+GO
+DROP TABLE dbo.Propietario;
+
+CREATE TABLE dbo.Comida
+    (Id_Comida int PRIMARY KEY NOT NULL,
+    NombreComida varchar(25) NOT NULL,
+    Precio money NULL,
+    PorcionDiaria varchar(max) NULL)
+GO
+CREATE TABLE dbo.Mascotas
+    (Id_Raza int PRIMARY KEY NOT NULL,
+    NombreRaza varchar(25) NOT NULL,
+    NombreMascota varchar(25) NOT NULL,
+	SexoMascota varchar(15) NOT NULL,
+	Id_Comida int NOT NULL,
+    	Id_Propietario int NOT NULL)
+    
+GO
+CREATE TABLE dbo.Propietario
+    (Id_Propietario int PRIMARY KEY NOT NULL,
+    NombrePropietario varchar(25) NOT NULL,
+	SexoPropietario varchar(15) NOT NULL,
+	Telefono int NOT NULL,
+    	Edad int NULL,)
+GO
+ALTER TABLE dbo.Mascotas
+ADD FOREIGN KEY (Id_Comida) REFERENCES dbo.Comida(Id_Comida);
+
+ALTER TABLE dbo.Mascotas
+ADD FOREIGN KEY (Id_Propietario) REFERENCES dbo.Propietario(Id_Propietario);
+SELECT TOP (1000) [Id_Raza]
+      ,[NombreRaza]
+      ,[NombreMascota]
+      ,[SexoMascota]
+      ,[Id_Comida]
+      ,[Id_Propietario]
+  FROM [Parcial1].[dbo].[Mascotas]
+
+********************************************
+form [formGroup]="ComidaForm" novalidate (ngSubmit)="onSubmit()">
+  
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Listado de Alimentos</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre de Producto" formControlName="NombreComida">
+            <mat-error *ngIf="ComidaForm.controls['NombreComida'].hasError('required')">
+              El nombre es<strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div> 
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Porción Diaria" formControlName="PorcionDiaria">
+            <mat-error *ngIf="ComidaForm.controls['PorcionDiaria'].hasError('required')">
+              La porción diaria es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="number" matInput placeholder="Precio $" formControlName="Precio">
+            <mat-error *ngIf="ComidaForm.controls['Precio'].hasError('required')">
+              El precio de venta es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>       
+      </div>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" >Registrar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+***************************************************
+
+
+
+
+cd .\src\app\Services\Modal > para estar en el directorio Services
+>ng g s producto desde la carpeta Services
+
+
+
+async borrar(element: ProductosModel){
+    const Id = element.IdProducto;
+    console.log(Id);
+
+    Swal.fire({
+      title: 'Está seguro de eliminar este registro?',
+      text: "Esta acción es irreversible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.api.Delete("Productoes", String(Id)).then((res) => {
+          console.log(res);        
+        });
+        if(element !== undefined ){
+              
+        }  
+        Swal.fire(
+          'Eliminado!',
+          'El registro ha sido eliminado.',
+          'success'
+        )
+      }
+    })
+    
+  }  
+
+Modal y Models
+Cuantos modalService hay que realizar
+Cuantos models hay que realizar, uno por cada componente o por cada Entidad
+
+
+
 

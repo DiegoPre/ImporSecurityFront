@@ -33,6 +33,16 @@ table {
     background: rgb(223, 182, 182);
     color: blue;
   }
+  .butt {
+    position: sticky;
+    background: rgb(223, 182, 182);
+    color: blue;
+  }
+  .butt1 {
+    position: sticky;
+    background: rgb(223, 182, 182);
+    color: rgb(27, 27, 52);
+  }
 
   .agregar{
     padding: 10px;

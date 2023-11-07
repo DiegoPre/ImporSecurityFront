@@ -4,10 +4,10 @@
    <!--Inicio filtro -->
   <mat-form-field>
     <mat-label>Filtro</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Diego" #input>
   </mat-form-field>
 
-<!--Inicio tabla -->
+<!--Inicio tabla Usuarios -->
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]= "dataSource" matSort>
       
@@ -18,13 +18,13 @@
               <td mat-cell *matCellDef= "let element"> {{ element[disCol] }} </td>
           </div>
 
-          <div class="butt" *ngIf= "disCol == 'Acciones'"> <!--si disCol es igual a Acciones agregue un th con Nombre y agregue los iconos a la columna-->
+          <div  *ngIf= "disCol == 'Acciones'"> <!--si disCol es igual a Acciones agregue un th con Nombre y agregue los iconos a la columna-->
               <th mat-header-cell *matHeaderCellDef> {{disCol}} </th>
               <td mat-cell *matCellDef= "let element">
-                  <button mat-icon-button (click)="editar(element)">
+                  <button class="butt1" mat-icon-button (click)="editar(element)">
                       <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button (click)="borrar(element)">
+                  <button class="butt" mat-icon-button (click)="borrar(element)">
                       <mat-icon>delete</mat-icon>
                   </button>                  
               </td>

@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductosModel } from 'src/app/Models/ProductosModel';
 import { RestService } from 'src/app/Services/rest.service';
+import { ProductoService } from 'src/app/Services/Modal/producto.service';
 import Swal from 'sweetalert2';
 
 
@@ -10,9 +11,13 @@ import Swal from 'sweetalert2';
   templateUrl: './registrar-product.component.html',
   styleUrls: ['./registrar-product.component.css']
 })
-export class RegistrarProductComponent {
-  constructor(private fb: FormBuilder, public api: RestService ) {
-        
+
+export class RegistrarProductComponent implements OnInit{
+  constructor(
+    private fb: FormBuilder, 
+    public api: RestService, 
+    public productoService: ProductoService ) {     
+
   }
 
   infoProductos: ProductosModel = {
@@ -39,8 +44,6 @@ export class RegistrarProductComponent {
     imagen: [null ]
   });
 
-  hasUnitNumber = false;
-
   cats = [
     {name: 'Productos vendidos'},
     {name: 'Barras de luz'},
@@ -53,9 +56,36 @@ export class RegistrarProductComponent {
     {name: 'Linternas'},
     {name: 'Sirenas y Parlantes'},
     {name: 'Swicht'}
-    ];
+  ];
+
+  titulo=""
+  accion=""
+  ngOnInit(): void {
+    this.titulo=this.productoService.titulo
+    this.accion=this.productoService.accion.value
+
+    if(this.productoService.accion.value == 'Editar Producto'){
+      //this.ProductosForm.controls['nombreCategoria'].setValue(
+      //  this.productoService.producto.IdCategoria + '');
+      this.ProductosForm.controls['nombreProducto'].setValue(     //se setean con el mismo dato que requiero nombre producto
+          this.productoService.producto.NombreProducto + '');
+      this.ProductosForm.controls['idProducto'].setValue(
+        this.productoService.producto.IdProducto + '' );
+      this.ProductosForm.controls['descripcion'].setValue(
+        this.productoService.producto.Descripcion + '' );
+      this.ProductosForm.controls['marca'].setValue(
+        this.productoService.producto.Marca + '');
+      this.ProductosForm.controls['origen'].setValue(
+        this.productoService.producto.Origen + '');
+      //this.ProductosForm.controls['precioVenta'].setValue(
+      //  this.productoService.producto.PrecioVenta + '' );
+      this.ProductosForm.controls['imagen'].setValue(
+        this.productoService.producto.Imagen + '' );      
+    }   
+  }  
 
   onSubmit(): void {
+   
     if(this.ProductosForm.valid){
       this.infoProductos.IdCategoria=this.ProductosForm.controls['nombreCategoria'].value
       this.infoProductos.NombreProducto=this.ProductosForm.controls['nombreProducto'].value
@@ -67,8 +97,12 @@ export class RegistrarProductComponent {
       this.infoProductos.Imagen=this.ProductosForm.controls['imagen'].value
 
       this.api.Post("Productoes",this.infoProductos)
-
-      console.log(this.infoProductos);
+     
+      Swal.fire(
+        'Los datos están enviado!',
+        'Buen trabajo!',
+        'success'
+      );
       
     }else{
       Swal.fire(
@@ -78,6 +112,6 @@ export class RegistrarProductComponent {
       );
 
     }
-    alert('Thanks!');
+    //alert('Thanks!');
   }
 }
