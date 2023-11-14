@@ -360,6 +360,43 @@ async borrar(element: ProductosModel){
     
   }  
 
+************************************************submit formulario productos
+
+  //Boton para validar información del formulario de productos con la DB
+  onSubmit(): void {
+   
+    if(this.ProductosForm.valid){
+      this.infoProductos.IdCategoria=this.ProductosForm.controls['nombreCategoria'].value
+      this.infoProductos.NombreProducto=this.ProductosForm.controls['nombreProducto'].value
+      this.infoProductos.IdProducto=this.ProductosForm.controls['idProducto'].value
+      this.infoProductos.Descripcion=this.ProductosForm.controls['descripcion'].value
+      this.infoProductos.Marca=this.ProductosForm.controls['marca'].value
+      this.infoProductos.Origen=this.ProductosForm.controls['origen'].value
+      this.infoProductos.PrecioVenta=this.ProductosForm.controls['precioVenta'].value
+      this.infoProductos.Imagen=this.ProductosForm.controls['imagen'].value
+
+      this.api.Post("Productoes",this.infoProductos)
+     
+      Swal.fire(
+        'Los datos se han enviado!',
+        'Buen trabajo!',
+        'success'
+      );
+      
+    }else{
+      Swal.fire(
+        'Debe ingresar los datos requeridos!',
+        'Complete la información!',
+        'error'
+      );
+
+    }
+    //alert('Thanks!');
+  }
+
+
+
+***************************************************************************
 Modal y Models
 Cuantos modalService hay que realizar
 Cuantos models hay que realizar, uno por cada componente o por cada Entidad

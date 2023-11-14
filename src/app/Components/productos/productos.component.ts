@@ -12,8 +12,6 @@ import { ProductoService } from 'src/app/Services/Modal/producto.service';
 import { BehaviorSubject } from 'rxjs';
 
 
-
-
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -34,7 +32,6 @@ export class ProductosComponent implements OnInit, AfterViewInit{
   }
   titulo=""
   accion="Registrar Producto"
-
 
   ngOnInit(): void {
       this.api.Get("Productoes").then((res)=>{
@@ -65,6 +62,7 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     this.displayedColumns.push('Acciones');
     console.log("this.displayedColumns");    
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -73,6 +71,7 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
   }
+  
   //debe traer el formulario con los datos del registro y habilitado para ser editado, se trae el título y la acción de hacer un PUT
   editar(element: any){
     const Id = element.IdProducto;
@@ -85,36 +84,39 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       });       
    
   }
-     
         
-  async borrar(element: ProductosModel){
-    const Id = element.IdProducto;
-    console.log(Id);
-
+  async borrar(element: any){
     Swal.fire({
-      title: 'Está seguro de eliminar este registro?',
-      text: "Esta acción es irreversible!",
-      icon: 'warning',
+      title: "Esta seguro de eliminar el registro?",
+      text: "No podrá recuperarlo nuevamente!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Eliminar!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Elimínelo!"
     }).then((result) => {
       if (result.isConfirmed) {
+        const Id = element.idProducto
+        console.log(Id);
         this.api.Delete("Productoes", String(Id)).then((res) => {
-          console.log(res);        
-        });
-        if(element !== undefined ){
-              
-        }  
-        Swal.fire(
-          'Eliminado!',
-          'El registro ha sido eliminado.',
-          'success'
-        )
+        console.log(res);
+        this.ngOnInit();
+        this.api.Delete("Productoes", String(Id)).then((res) => {
+          console.log(res);
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Su registro se eliminó con éxito.",
+            icon: "success"
+          });
+        })    
+      }).catch((console.error));
+        
       }
-    })
+    });
+      
     
-  }  
+  }
+  
+
 
 }

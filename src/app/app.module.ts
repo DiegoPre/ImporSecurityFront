@@ -32,7 +32,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RegistrarProductComponent } from './Components/Forms/registrar-product/registrar-product.component';
 import { RegistrarCatProductComponent } from './Components/Forms/registrar-cat-product/registrar-cat-product.component';
 import { RegistrarOrdenCompraComponent } from './Components/Forms/registrar-orden-compra/registrar-orden-compra.component';
-import { RegistrarProveedorComponent } from './Components/Forms/registrar-proveedor/registrar-proveedor.component';
+import { LoginComponent } from './Components/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -49,8 +50,9 @@ import { RegistrarProveedorComponent } from './Components/Forms/registrar-provee
     RegistrarProductComponent,
     RegistrarCatProductComponent,
     RegistrarOrdenCompraComponent,
-    RegistrarProveedorComponent,
+    LoginComponent,
   ],
+
   imports: [
     BrowserModule,
     MatDialogModule,
@@ -71,6 +73,7 @@ import { RegistrarProveedorComponent } from './Components/Forms/registrar-provee
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

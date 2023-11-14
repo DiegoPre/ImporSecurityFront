@@ -2,8 +2,7 @@
 export class ProductosModel {
 
     IdProducto: string;
-    IdCategoria: number;
-    IdProveedor: string;
+    nombreCategoria: string;
     NombreProducto: string;
     Descripcion: string;
     Marca: string;

@@ -4,6 +4,7 @@ import { ProductosModel } from 'src/app/Models/ProductosModel';
 import { RestService } from 'src/app/Services/rest.service';
 import { ProductoService } from 'src/app/Services/Modal/producto.service';
 import Swal from 'sweetalert2';
+import { CategoriaModel } from 'src/app/Models/CategoriaModel';
 
 
 @Component({
@@ -20,42 +21,43 @@ export class RegistrarProductComponent implements OnInit{
 
   }
 
-  infoProductos: ProductosModel = {
-    IdProducto: "",
-    IdCategoria: 0,
-    IdProveedor: "",
-    NombreProducto: "",
-    Descripcion: "",
-    Marca: "",
-    Origen: "",
+  infoProductos: ProductosModel={
+    IdProducto: '',
+    nombreCategoria: '',
+    NombreProducto: '',
+    Descripcion: '',
+    Marca: '',
+    Origen: '',
     PrecioVenta: 0,
-    Imagen:""
+    Imagen: ''
   }
-
+  
   //private fb = inject(FormBuilder);
   ProductosForm = this.fb.group({
+    idProducto: ["", Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
     nombreCategoria: [null, Validators.required],
     nombreProducto: ["", Validators.required],
     descripcion: ["", Validators.required],
     marca: ["", Validators.required],
     origen: ["", Validators.required],
-    idProducto: ["", Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
     precioVenta: [null, Validators.required],
     imagen: [null ]
   });
 
-  cats = [
-    {name: 'Productos vendidos'},
-    {name: 'Barras de luz'},
-    {name: ' Minibarra de luz'},
-    {name: 'Luces Perimetrales'},
-    {name: 'Luces Interiores'},
-    {name: 'Señalizador Tráfico'},
-    {name: 'Luces Strobos'},
-    {name: 'Luces Exploradoras'},
-    {name: 'Linternas'},
-    {name: 'Sirenas y Parlantes'},
-    {name: 'Swicht'}
+  
+
+  cats: CategoriaModel[] = [
+    {NombreCategoria: 'Productos vendidos'},
+    {NombreCategoria: 'Barras de luz'},
+    {NombreCategoria: ' Minibarra de luz'},
+    {NombreCategoria: 'Luces Perimetrales'},
+    {NombreCategoria: 'Luces Interiores'},
+    {NombreCategoria: 'Señalizador Tráfico'},
+    {NombreCategoria: 'Luces Strobos'},
+    {NombreCategoria: 'Luces Exploradoras'},
+    {NombreCategoria: 'Linternas'},
+    {NombreCategoria: 'Sirenas y Parlantes'},
+    {NombreCategoria: 'Swicht'}
   ];
 
   titulo=""
@@ -65,8 +67,9 @@ export class RegistrarProductComponent implements OnInit{
     this.accion=this.productoService.accion.value
 
     if(this.productoService.accion.value == 'Editar Producto'){
+      console.log(this.productoService.producto);
       //this.ProductosForm.controls['nombreCategoria'].setValue(
-      //  this.productoService.producto.IdCategoria + '');
+      //   this.productoService.producto.nombreCategoria + '');
       this.ProductosForm.controls['nombreProducto'].setValue(     //se setean con el mismo dato que requiero nombre producto
           this.productoService.producto.NombreProducto + '');
       this.ProductosForm.controls['idProducto'].setValue(
@@ -78,16 +81,16 @@ export class RegistrarProductComponent implements OnInit{
       this.ProductosForm.controls['origen'].setValue(
         this.productoService.producto.Origen + '');
       //this.ProductosForm.controls['precioVenta'].setValue(
-      //  this.productoService.producto.PrecioVenta + '' );
+      //  this.productoService.producto.PrecioVenta?);
       this.ProductosForm.controls['imagen'].setValue(
         this.productoService.producto.Imagen + '' );      
     }   
   }  
 
-  onSubmit(): void {
-   
+  //Boton para validar información del formulario de productos con la DB
+  onSubmit(): void {   
     if(this.ProductosForm.valid){
-      this.infoProductos.IdCategoria=this.ProductosForm.controls['nombreCategoria'].value
+      this.infoProductos.nombreCategoria=this.ProductosForm.controls['nombreCategoria'].value
       this.infoProductos.NombreProducto=this.ProductosForm.controls['nombreProducto'].value
       this.infoProductos.IdProducto=this.ProductosForm.controls['idProducto'].value
       this.infoProductos.Descripcion=this.ProductosForm.controls['descripcion'].value
@@ -99,7 +102,7 @@ export class RegistrarProductComponent implements OnInit{
       this.api.Post("Productoes",this.infoProductos)
      
       Swal.fire(
-        'Los datos están enviado!',
+        'Los datos se han enviado!',
         'Buen trabajo!',
         'success'
       );

@@ -1,9 +1,8 @@
 
 export class CategoriaModel {
 
-    Id: number;
+    //Id: number;
     NombreCategoria: string;
-    Descripcion: string;
+    //Descripcion: string;
    
-
 }

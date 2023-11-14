@@ -6,6 +6,7 @@ import { NosotrosComponent } from './Components/nosotros/nosotros.component';
 import { NuestrosClientesComponent } from './Components/nuestros-clientes/nuestros-clientes.component';
 import { ProductosComponent } from './Components/productos/productos.component';
 import { ProductComponent } from './Components/product/product.component';
+import { LoginComponent } from './Components/login/login.component';
 
 const routes: Routes = [
   {path:"CreaTuCuenta", component:CreaTuCuentaComponent},
@@ -14,6 +15,8 @@ const routes: Routes = [
   {path:"NuestrosClientes", component:NuestrosClientesComponent},
   {path:"Productos", component:ProductosComponent},
   {path:"Product", component:ProductComponent},
+  {path:"Login", component:LoginComponent},
+  
 
 ];
 

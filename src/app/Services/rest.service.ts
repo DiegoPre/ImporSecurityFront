@@ -21,20 +21,20 @@ export class RestService {
     })
     return response;
   }
-//post
-  public async Post(controlador:string, objet:any){
-    return await this.api.post(this.Ulr+controlador, objet).subscribe((res)=>{});
-      
+//post crea el registro desde un formulario
+  public async Post(controlador:string, body:any){
+    return await this.api.post(this.Ulr+controlador, body).subscribe((res)=>{});      
   }
-//update
-  public async Update(controlador:string, id: string, objet:any){
-    return await this.api.put(this.Ulr+controlador+"/"+ id, objet);
+  
+//actualiza información en DB
+  public async Update(controlador:string, id: string, body:any){
+    return await this.api.put(this.Ulr+controlador+"/"+ id, body).toPromise().then((res)=>{});
       
   }
   
   //Delete
   public async Delete(controlador:string, id: string){
-    var response: any
+    var response;
     return await this.api.delete(this.Ulr+controlador+"/"+ id).toPromise().then((res =>{
       response = res;
     }))
