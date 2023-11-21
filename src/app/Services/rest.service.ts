@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LoginComponent } from '../Components/login/login.component';
 //import { Observable } from 'rxjs';
 
 
@@ -37,8 +38,22 @@ export class RestService {
     var response;
     return await this.api.delete(this.Ulr+controlador+"/"+ id).toPromise().then((res =>{
       response = res;
-    }))
+    }));
     return response;
           
   }
+
+  public async login(usuario: string, password: string) {
+    var response;
+    await this.api.get(this.Ulr+"Usuarios"+"/"+usuario+","+password).toPromise().then(res => {
+      response = res;
+      console.log(response);
+      
+   localStorage.setItem("usuario",response[0].email)
+      
+    });
+    return response;
+  }
+  
+  
 }

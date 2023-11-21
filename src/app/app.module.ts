@@ -34,6 +34,8 @@ import { RegistrarCatProductComponent } from './Components/Forms/registrar-cat-p
 import { RegistrarOrdenCompraComponent } from './Components/Forms/registrar-orden-compra/registrar-orden-compra.component';
 import { LoginComponent } from './Components/login/login.component';
 import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+//import { routing } from "./app.routing";
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
+    MatMenuModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,

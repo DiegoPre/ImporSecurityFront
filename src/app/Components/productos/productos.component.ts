@@ -4,12 +4,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RestService } from 'src/app/Services/rest.service';
 //import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { RegistrarProductComponent } from '../Forms/registrar-product/registrar-product.component';
 import { ProductosModel } from 'src/app/Models/ProductosModel';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/Services/Modal/producto.service';
-import { BehaviorSubject } from 'rxjs';
+
 
 
 @Component({
@@ -32,21 +32,28 @@ export class ProductosComponent implements OnInit, AfterViewInit{
   }
   titulo=""
   accion="Registrar Producto"
+  loading = false;  //variable para actualizar el ngOnInit
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.loading = true;
       this.api.Get("Productoes").then((res)=>{
       this.loadTable(res)
       this.dataSource.data=res
-      
+      console.log(this.dataSource.data)
+      this.loading = false;      
     })
   }
   // OpenDialog abre una ventana de un formulario vacio, y con el modal se trae un titulo y el nombre del submit para hacer un post
   openDialog(){
     this.productService.titulo = "Crear nuevo Producto"
     this.productService.accion.next("Crear Producto")
-    this.dialog.open(RegistrarProductComponent,{
+    const dialogRef = this.dialog.open(RegistrarProductComponent,{
       width:'850px',  
     });
+    dialogRef.afterClosed().subscribe(res =>{  //cerrar y limpiar el openDialog()
+      console.log('The dialog was closed'+res);
+      this.ngOnInit();
+    })    
   }
 
   ngAfterViewInit() {
@@ -73,19 +80,35 @@ export class ProductosComponent implements OnInit, AfterViewInit{
   }
   
   //debe traer el formulario con los datos del registro y habilitado para ser editado, se trae el título y la acción de hacer un PUT
-  editar(element: any){
-    const Id = element.IdProducto;
-    this.productService.accion.next("Editar Producto")
-      this.productService.titulo="Editar Producto"
-      this.productService.producto = element
-      this.dialog.open(RegistrarProductComponent, {
-        height: 'auto',
-        width: 'auto'
-      });       
+  async editar(element: any){
+    const Id = element.idProducto;
+    this.productService.titulo="Editar Producto"
+    this.productService.accion.next("Editar Producto"); 
+    
+    try {
+      const productoData = await this.api.Get("Productoes/" + Id);
+      this.productService.producto=productoData;
+
+      //const categoriaData = await this.api.Get("CategoriaProductoes/" + productoData.id);
+      //this.productService.categoria =categoriaData;
+
+      //this.productService.producto = element
+      const dialogRef= this.dialog.open(RegistrarProductComponent, {
+          height: 'auto',
+          width: 'auto'
+      }); 
+      dialogRef.afterClosed().subscribe(res =>{
+        console.log('El dialogo fue cerrado'+res);
+        this.ngOnInit();
+      })      
+    } catch (error) {
+      console.error('Error al obtener el registro: ',error);
+    }         
    
   }
-        
-  async borrar(element: any){
+
+ 
+  async borrar(element: any){    
     Swal.fire({
       title: "Esta seguro de eliminar el registro?",
       text: "No podrá recuperarlo nuevamente!",
@@ -96,27 +119,26 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       confirmButtonText: "Si, Elimínelo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        const Id = element.idProducto
-        console.log(Id);
-        this.api.Delete("Productoes", String(Id)).then((res) => {
-        console.log(res);
-        this.ngOnInit();
-        this.api.Delete("Productoes", String(Id)).then((res) => {
-          console.log(res);
-          Swal.fire({
-            title: "Eliminado!",
-            text: "Su registro se eliminó con éxito.",
-            icon: "success"
-          });
-        })    
-      }).catch((console.error));
         
+        const Id = element.idProducto;
+        console.log(Id);
+        if(element !== undefined) {
+          this.api.Delete("Productoes", Id).then((res) => {
+            console.log(res);
+            this.ngOnInit();
+            console.log(res);
+          }).catch((err) =>{
+            console.log(err);
+            Swal.fire(
+              'Error',
+              'Hubo un error al borrar el registro.',
+              'error'
+            );
+          });
+        }
       }
     });
-      
-    
   }
-  
 
 
 }

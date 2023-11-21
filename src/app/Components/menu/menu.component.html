@@ -16,24 +16,25 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+      <button type="button" aria-label="Toggle sidenav"  mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>IMPORSECURITY <H4> Ofreciendo seguridad en las vías</H4></span>
+      
       <!-- Contruyendo mi avatar -->
-      <ngx-avatars class="my-avatar" name="D P" value="28%" size="50" [round]="true"></ngx-avatars>
+      <div class="icon">
+        <button mat-button [matMenuTriggerFor]="menu"><ngx-avatars class="my-avatar" name="{{email}}"  [round]="true"></ngx-avatars></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="cerrarSesion()"> Cerrar Sesión</button>
+        </mat-menu>
+      </div>      
             
-    </mat-toolbar>
-    
+    </mat-toolbar>    
     <!-- Add Content Here -->
-    <router-outlet></router-outlet>
-    
-    <!--<app-productos></app-productos>
+    <router-outlet></router-outlet>    
+    <!--En caso de no utilizar <router-outlet> se llama con cada componente
+    <app-productos></app-productos>
     <app-nosotros></app-nosotros>
     <app-crea-tu-cuenta></app-crea-tu-cuenta>
     <app-nuestros-clientes></app-nuestros-clientes>-->

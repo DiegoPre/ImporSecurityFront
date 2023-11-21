@@ -20,31 +20,29 @@ export class RegistrarProductComponent implements OnInit{
     public productoService: ProductoService ) {     
 
   }
-
+  //modelo producto para crear
   infoProductos: ProductosModel={
-    IdProducto: '',
+    idProducto: '',
     nombreCategoria: '',
-    NombreProducto: '',
-    Descripcion: '',
-    Marca: '',
-    Origen: '',
-    PrecioVenta: 0,
-    Imagen: ''
+    nombreProducto: '',
+    descripcion: '',
+    marca: '',
+    origen: '',
+    precioVenta: 0,
+    imagen: ''
   }
   
   //private fb = inject(FormBuilder);
   ProductosForm = this.fb.group({
-    idProducto: ["", Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
-    nombreCategoria: [null, Validators.required],
+    idProducto: ["", Validators.compose([Validators.required, Validators.maxLength(10)])],
+    nombreCategoria: ['', Validators.required],
     nombreProducto: ["", Validators.required],
     descripcion: ["", Validators.required],
     marca: ["", Validators.required],
     origen: ["", Validators.required],
-    precioVenta: [null, Validators.required],
+    precioVenta: [0, Validators.required],
     imagen: [null ]
-  });
-
-  
+  });  
 
   cats: CategoriaModel[] = [
     {NombreCategoria: 'Productos vendidos'},
@@ -68,22 +66,22 @@ export class RegistrarProductComponent implements OnInit{
 
     if(this.productoService.accion.value == 'Editar Producto'){
       console.log(this.productoService.producto);
-      //this.ProductosForm.controls['nombreCategoria'].setValue(
-      //   this.productoService.producto.nombreCategoria + '');
+      this.ProductosForm.controls['nombreCategoria'].setValue(
+        this.productoService.producto.nombreCategoria + '');
       this.ProductosForm.controls['nombreProducto'].setValue(     //se setean con el mismo dato que requiero nombre producto
-          this.productoService.producto.NombreProducto + '');
+          this.productoService.producto.nombreProducto + '');
       this.ProductosForm.controls['idProducto'].setValue(
-        this.productoService.producto.IdProducto + '' );
+        this.productoService.producto.idProducto + '' );
       this.ProductosForm.controls['descripcion'].setValue(
-        this.productoService.producto.Descripcion + '' );
+        this.productoService.producto.descripcion + '' );
       this.ProductosForm.controls['marca'].setValue(
-        this.productoService.producto.Marca + '');
+        this.productoService.producto.marca + '');
       this.ProductosForm.controls['origen'].setValue(
-        this.productoService.producto.Origen + '');
-      //this.ProductosForm.controls['precioVenta'].setValue(
-      //  this.productoService.producto.PrecioVenta?);
+        this.productoService.producto.origen + '');
+      this.ProductosForm.controls['precioVenta'].setValue(
+        this.productoService.producto.precioVenta );
       this.ProductosForm.controls['imagen'].setValue(
-        this.productoService.producto.Imagen + '' );      
+        this.productoService.producto.imagen + '' );      
     }   
   }  
 
@@ -91,13 +89,13 @@ export class RegistrarProductComponent implements OnInit{
   onSubmit(): void {   
     if(this.ProductosForm.valid){
       this.infoProductos.nombreCategoria=this.ProductosForm.controls['nombreCategoria'].value
-      this.infoProductos.NombreProducto=this.ProductosForm.controls['nombreProducto'].value
-      this.infoProductos.IdProducto=this.ProductosForm.controls['idProducto'].value
-      this.infoProductos.Descripcion=this.ProductosForm.controls['descripcion'].value
-      this.infoProductos.Marca=this.ProductosForm.controls['marca'].value
-      this.infoProductos.Origen=this.ProductosForm.controls['origen'].value
-      this.infoProductos.PrecioVenta=this.ProductosForm.controls['precioVenta'].value
-      this.infoProductos.Imagen=this.ProductosForm.controls['imagen'].value
+      this.infoProductos.nombreProducto=this.ProductosForm.controls['nombreProducto'].value
+      this.infoProductos.idProducto=this.ProductosForm.controls['idProducto'].value
+      this.infoProductos.descripcion=this.ProductosForm.controls['descripcion'].value
+      this.infoProductos.marca=this.ProductosForm.controls['marca'].value
+      this.infoProductos.origen=this.ProductosForm.controls['origen'].value
+      this.infoProductos.precioVenta=this.ProductosForm.controls['precioVenta'].value
+      this.infoProductos.imagen=this.ProductosForm.controls['imagen'].value
 
       this.api.Post("Productoes",this.infoProductos)
      

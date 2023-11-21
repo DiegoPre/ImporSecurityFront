@@ -1,13 +1,13 @@
 
 export class ProductosModel {
 
-    IdProducto: string;
+    idProducto: string;
     nombreCategoria: string;
-    NombreProducto: string;
-    Descripcion: string;
-    Marca: string;
-    Origen: string;
-    PrecioVenta: number;
-    Imagen:string;
+    nombreProducto: string;
+    descripcion: string;
+    marca: string;
+    origen: string;
+    precioVenta: number;
+    imagen: string;
 
 }

@@ -44,7 +44,11 @@ INSERT INTO [IMPORSECURITY].[dbo].[Productos] (
 )
 VALUES
     ('S217', 7, 'CH01', 'Módulo Perimetral', 'Luces Perimetrales', 'Signal', 'China', 10, 130000.00, 160000.00, 0.00, 0.19, '', ''),
-    ('SS770', 13, 'US01', 'Sirena Manual 5 tonos', 'Equipo de perifoneo', 'Signal', 'USA', 20, 800000.00, 920000.00, 0.00, 0.19, '', '');
+    ('SS770', 13, 'US01', 'Sirena Manual 5 tonos', 'Equipo de perifoneo', 'Signal', 'USA', 20, 800000.00, 920000.00, 0.00, 0.19, '', ''),
+    ('SS100', 13, 'US01', 'Parlante Altavoz 100W', 'Parlante para perifoneo', 'Signal', 'USA', 10, 250000.00, 350000.00, 0.00, 0.19, '', ''),
+    ('S220W', 7, 'CH01', 'Módulo Perimetral Led Blanco', 'Luces Perimetrales', 'Signal', 'China', 15, 130000.00, 160000.00, 0.00, 0.19, '', ''),
+    ('SLED440', 6, 'CH01', 'Minibarra de Led Rojo/Blanco', 'Luz señalización de techo', 'Signal', 'China', 10, 300000.00, 420000.00, 0.00, 0.19, '', '');
+
     -- Agrega más filas de datos aquí
     ('1000', 3, 'US01', 'Producto 1', 'Descripción 1', 'Signal', 'Origen 3', 5, 50.00, 80.00, 0.02, 0.19, 'S', 'imagen1000.jpg');
 
@@ -103,6 +107,8 @@ ng generate @angular/material:address-form registrar  para crearformulario de co
 Crear carpeta Services desde app
 >ng g s [nombre] desde la carpeta Services
 >ng g s api desde la carpeta Services
+>ng generate service local-storage  para interactual con el servicio implementando metodos con los datos información desde el navegador
+
 
 en Rest.services.ts se debe import { HttpClient } from '@angular/common/http';
 se agrega constructor en dentro de export class RestService
@@ -130,7 +136,7 @@ En angular se implemanta el metodo OnInit que es una interface que permite estab
  lo crear en el momento que se llama el componente antes de renderizarlo y tenga la información disponible. 
 
 
-to propmise es para estar pendiente y tener acceso a estar sincronizado 100% de cualquier cambio del servicoo get, 
+to promise es para estar pendiente y tener acceso a estar sincronizado 100% de cualquier cambio del servicoo get, 
 esta constantemente vigilando cualquier cambio que haya para informar, espera una sola vez,
 
 Tiene un metodo then, entonces que desea hacer (se crea una variable momentanea para que imprima la respuesta por consola.
@@ -144,21 +150,6 @@ Cors protocolo a nivel de seguridad cuando hay un servidor no cualquiera puede u
 En VSCommunity en Programs.cs linea 32 se configura app.UseCors() para gestionar la petición que nos hace clientes externos
 En linea 6 se realiza la sgte configuración 
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200"
-                                ).AllowAnyHeader()
-                                 .AllowAnyMethod();
-        });
-});
-
-
-
-
-
 ***Program.cs****
 app.UseCors();
 builder.Services.AddCors(options =>
@@ -171,7 +162,6 @@ builder.Services.AddCors(options =>
                                 .AllowAnyMethod();
         });
 });
-
 
 
 
@@ -330,36 +320,55 @@ cd .\src\app\Services\Modal > para estar en el directorio Services
 
 
 
-async borrar(element: ProductosModel){
-    const Id = element.IdProducto;
+async borrar(element: any){
+    const Id = element.idProducto
     console.log(Id);
 
+    if(element !== undefined) {
+      this.api.Delete("Productoes", String(Id)).then((res) => {
+        console.log(res);   
+
+        Swal.fire(
+          'Esta seguro de eliminar este registro??',
+          '',
+          'warning'
+        );
+        console.log('Registro eliminado con éxito');     
+     });
+   }
+  }
+*****
+   async borrar(element: any){    
     Swal.fire({
-      title: 'Está seguro de eliminar este registro?',
-      text: "Esta acción es irreversible!",
-      icon: 'warning',
+      title: "Esta seguro de eliminar el registro?",
+      text: "No podrá recuperarlo nuevamente!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Eliminar!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Elimínelo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.api.Delete("Productoes", String(Id)).then((res) => {
-          console.log(res);        
-        });
-        if(element !== undefined ){
-              
-        }  
-        Swal.fire(
-          'Eliminado!',
-          'El registro ha sido eliminado.',
-          'success'
-        )
-      }
-    })
-    
-  }  
 
+        const Id = element.idProducto;
+        console.log(Id);
+        if(element !== undefined) {
+          this.api.Delete("Productoes", Id).then((res) => {
+            console.log(res);
+            this.ngOnInit();
+            console.log(res);
+          }).catch((err) =>{
+            console.log(err);
+            Swal.fire(
+              'Error',
+              'Hubo un error al borrar el registro.',
+              'error'
+            );
+          });
+        }
+      }
+    });
+  }
 ************************************************submit formulario productos
 
   //Boton para validar información del formulario de productos con la DB

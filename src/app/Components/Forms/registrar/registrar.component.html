@@ -85,13 +85,13 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Ingrese su password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'">
+            <mat-label>Ingrese su contraseña</mat-label>
+            <input matInput placeholder="password" formControlName="password">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="UsuariosForm.controls['password'].hasError('required')">
-              Por favor ingrese una clave de ingreso
+              La clave es <strong>requerida</strong>
             </mat-error>            
           </mat-form-field>
         </div>        
@@ -112,7 +112,8 @@
     </mat-card-content>
     
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit" >Registrar</button>
+      <button mat-raised-button color="primary" type="submit" >{{accion}}</button>
     </mat-card-actions>
   </mat-card>
 </form>
+

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import Swal from 'sweetalert2';
 import { FormBuilder, Validators } from '@angular/forms';
 import { RestService } from 'src/app/Services/rest.service';
@@ -14,8 +14,12 @@ import { UsuariosModel } from 'src/app/Models/UsuariosModel';
 export class RegistrarComponent {
 
   constructor(private fb: FormBuilder, public api: RestService ) {
+    
         
   }
+  
+  titulo=""
+  accion=""
 
   infoUsuarios: UsuariosModel = {
     IdUsuario: 0,

@@ -1,0 +1,51 @@
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+
+head{ padding: 0; margin: 0;
+}form{ max-width: 250px; margin: 1em auto;}
+
+html, body { height: 100%;
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+  h3{
+    color: blue;
+}
+
+#miContenedor {
+    border: 2px solid #333; /* Borde sólido de 2 píxeles de ancho de color gris oscuro */
+    padding: 20px; /* Espaciado interno de 20 píxeles */
+    margin: 20px; /* Margen externo de 20 píxeles */
+    background-color: #f0f0f0; /* Color de fondo gris claro */
+    border-radius: 10px; /* Bordes redondeados de 10 píxeles */
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+  .opcion {
+    color: red;
+    padding: 2px;
+    border: 1px;
+  }
+  button {
+    position: sticky;
+    background: rgb(223, 182, 182);
+    color: blue;
+  }
+  .butt {
+    position: sticky;
+    background: rgb(223, 182, 182);
+    color: blue;
+  }
+  .butt1 {
+    position: sticky;
+    background: rgb(223, 182, 182);
+    color: rgb(27, 27, 52);
+  }
+
+  .agregar{
+    padding: 10px;
+    margin: 10px;
+  }
