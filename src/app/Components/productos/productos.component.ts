@@ -3,14 +3,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RestService } from 'src/app/Services/rest.service';
-//import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { RegistrarProductComponent } from '../Forms/registrar-product/registrar-product.component';
-import { ProductosModel } from 'src/app/Models/ProductosModel';
+//import { ProductosModel } from 'src/app/Models/ProductosModel';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/Services/Modal/producto.service';
-
-
 
 @Component({
   selector: 'app-productos',
@@ -30,9 +28,10 @@ export class ProductosComponent implements OnInit, AfterViewInit{
   constructor(public api: RestService, public dialog: MatDialog, public productService: ProductoService) {
         
   }
+
   titulo=""
-  accion="Registrar Producto"
-  loading = false;  //variable para actualizar el ngOnInit
+  accion="Crear Producto"
+  loading = false;  //variable para mostrar spinning actualizar el ngOnInit
 
   ngOnInit() {
     this.loading = true;
@@ -43,25 +42,13 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       this.loading = false;      
     })
   }
-  // OpenDialog abre una ventana de un formulario vacio, y con el modal se trae un titulo y el nombre del submit para hacer un post
-  openDialog(){
-    this.productService.titulo = "Crear nuevo Producto"
-    this.productService.accion.next("Crear Producto")
-    const dialogRef = this.dialog.open(RegistrarProductComponent,{
-      width:'850px',  
-    });
-    dialogRef.afterClosed().subscribe(res =>{  //cerrar y limpiar el openDialog()
-      console.log('The dialog was closed'+res);
-      this.ngOnInit();
-    })    
-  }
 
   ngAfterViewInit() {
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort = this.sort;    
   }
-  //genera el contenido de la tabla de acuerdo a lo que recibe del backend .NET
-  loadTable(data:any[]){
+   //genera el contenido de la tabla de acuerdo a lo que recibe del backend .NET
+   loadTable(data:any[]){
     this.displayedColumns=[];
     for (let column in data[0]){
       this.displayedColumns.push(column);
@@ -69,6 +56,19 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     this.displayedColumns.push('Acciones');
     console.log("this.displayedColumns");    
   }
+
+  // OpenDialog abre una ventana de un formulario vacio, y con el modal se trae un titulo y el nombre del submit para hacer un post
+  openDialog(){
+    this.productService.titulo = "Crear Producto"
+    this.productService.accion.next("Crear Producto")
+    const dialogRef = this.dialog.open(RegistrarProductComponent,{
+      width:'550px',  
+    });
+    dialogRef.afterClosed().subscribe(res =>{  //cerrar y limpiar el openDialog()
+      console.log('The dialog was closed'+res);
+      this.ngOnInit();
+    });
+  } 
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -88,11 +88,7 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     try {
       const productoData = await this.api.Get("Productoes/" + Id);
       this.productService.producto=productoData;
-
-      //const categoriaData = await this.api.Get("CategoriaProductoes/" + productoData.id);
       //this.productService.categoria =categoriaData;
-
-      //this.productService.producto = element
       const dialogRef= this.dialog.open(RegistrarProductComponent, {
           height: 'auto',
           width: 'auto'
@@ -103,10 +99,8 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       })      
     } catch (error) {
       console.error('Error al obtener el registro: ',error);
-    }         
-   
+    }     
   }
-
  
   async borrar(element: any){    
     Swal.fire({
@@ -119,7 +113,6 @@ export class ProductosComponent implements OnInit, AfterViewInit{
       confirmButtonText: "Si, Elimínelo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        
         const Id = element.idProducto;
         console.log(Id);
         if(element !== undefined) {

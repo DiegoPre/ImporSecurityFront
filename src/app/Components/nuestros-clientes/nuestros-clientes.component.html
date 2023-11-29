@@ -1,5 +1,5 @@
 <div id="miContenedor">
-  <h1>{{titulo}}</h1>
+  <h1>{{titulos}}</h1>
 
    <!--Inicio filtro -->
   <mat-form-field>
@@ -39,10 +39,10 @@
       <td class="mat-cell" colspan="4">No se encuentra información "{{input.value}}"</td>
     </tr>
   </table>
-
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </div>
+
 <div class="agregar">
-  <button mat-button (click)="openDialog()">Nuevo Usuario</button>
+  <button mat-button (click)="openDialog()">{{accion}}</button>
 </div>
 </div>

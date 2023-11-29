@@ -45,11 +45,11 @@ export class RestService {
 
   public async login(usuario: string, password: string) {
     var response;
-    await this.api.get(this.Ulr+"Usuarios"+"/"+usuario+","+password).toPromise().then(res => {
+    await this.api.get(this.Ulr+"Usuarios"+"/"+usuario+"/"+password).toPromise().then(res => {
       response = res;
       console.log(response);
       
-   localStorage.setItem("usuario",response[0].email)
+      localStorage.setItem("usuario",response[0].email)
       
     });
     return response;

@@ -1,4 +1,4 @@
-
+<div>
 <form [formGroup]="UsuariosForm" novalidate (ngSubmit)="onSubmit()">
   
   <mat-card class="shipping-card">
@@ -6,20 +6,20 @@
       <mat-card-title>Información de Cuenta</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
+      <!--<div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Nombre Compañia " formControlName="company">
           </mat-form-field>
         </div>
-      </div>
+      </div>   -->
 
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Nombre de Contacto" formControlName="nombre">
+            <input matInput placeholder="Nombre Compañia /Contacto" formControlName="nombre">
             <mat-error *ngIf="UsuariosForm.controls['nombre'].hasError('required')">
-              El nombre es<strong>requerido</strong>
+              El nombre es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
         </div>      
@@ -33,8 +33,8 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input type="number" matInput placeholder="Tipo de Documento" formControlName="TipoDocumento">
-            <mat-error *ngIf="UsuariosForm.controls['TipoDocumento'].hasError('required')">
+            <input type="number" matInput placeholder="Tipo de Documento" formControlName="tipoDocumento">
+            <mat-error *ngIf="UsuariosForm.controls['tipoDocumento'].hasError('required')">
               El tipo de documento es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
@@ -42,6 +42,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input type="number" matInput placeholder="No. Identificación" formControlName="idUsuario">
+            <mat-hint>Ingrese su número de identificación válido </mat-hint>
             <mat-error *ngIf="UsuariosForm.controls['idUsuario'].hasError('required')">
               El No. identificación es <strong>requerido</strong>
             </mat-error>
@@ -59,7 +60,6 @@
           </mat-form-field>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -69,6 +69,17 @@
             </mat-error>
           </mat-form-field>
         </div>        
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>Telefono</mat-label>
+          <span matPrefix>+1 &nbsp;</span>
+          <input type="tel" matInput placeholder="555-555-1234" formControlName="telefono">
+          <mat-error *ngIf="UsuariosForm.controls['telefono'].hasError('required')">
+            El teléfono es <strong>requerido</strong>
+          </mat-error>
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
       </div>
       <div class="row">
         <div class="col">
@@ -96,19 +107,6 @@
           </mat-form-field>
         </div>        
       </div>
-
-      <div>
-        <mat-form-field class="full-width">
-          <mat-label>Telefono</mat-label>
-          <span matPrefix>+1 &nbsp;</span>
-          <input type="tel" matInput placeholder="555-555-1234" formControlName="telefono">
-          <mat-error *ngIf="UsuariosForm.controls['telefono'].hasError('required')">
-            El teléfono es <strong>requerido</strong>
-          </mat-error>
-          <mat-icon matSuffix>mode_edit</mat-icon>
-        </mat-form-field>
-      </div>
-            
     </mat-card-content>
     
     <mat-card-actions>
@@ -116,4 +114,7 @@
     </mat-card-actions>
   </mat-card>
 </form>
-
+<div class="botonRegresar">
+  <button [disabled]="!habilitado" (click)="realizarAccion()" color="primary"> Regresar</button>
+</div>
+</div>

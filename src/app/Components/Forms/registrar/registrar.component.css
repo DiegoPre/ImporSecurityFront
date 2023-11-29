@@ -58,3 +58,10 @@ table {
 .col:last-child {
   margin-right: 0;
 }
+
+.botonRegresar {
+  margin: 20px;
+  background-color: rgb(234, 234, 243);
+  padding: 10px 20px;
+
+}

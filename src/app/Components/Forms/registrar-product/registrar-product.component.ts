@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductosModel } from 'src/app/Models/ProductosModel';
 import { RestService } from 'src/app/Services/rest.service';
 import { ProductoService } from 'src/app/Services/Modal/producto.service';
-import Swal from 'sweetalert2';
+import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { CategoriaModel } from 'src/app/Models/CategoriaModel';
-
 
 @Component({
   selector: 'app-registrar-product',
@@ -17,9 +17,18 @@ export class RegistrarProductComponent implements OnInit{
   constructor(
     private fb: FormBuilder, 
     public api: RestService, 
-    public productoService: ProductoService ) {     
+    public productoService: ProductoService,
+    private localStorageService: LocalStorageService ) {
+      
+      this.habilitado = localStorageService.getItem("isRegistered")
 
   }
+
+  habilitado: boolean = true;
+  loading: boolean = false
+  titulo=""
+  accion=""
+
   //modelo producto para crear
   infoProductos: ProductosModel={
     idProducto: '',
@@ -32,7 +41,7 @@ export class RegistrarProductComponent implements OnInit{
     imagen: ''
   }
   
-  //private fb = inject(FormBuilder);
+  //formulario de control
   ProductosForm = this.fb.group({
     idProducto: ["", Validators.compose([Validators.required, Validators.maxLength(10)])],
     nombreCategoria: ['', Validators.required],
@@ -57,9 +66,8 @@ export class RegistrarProductComponent implements OnInit{
     {NombreCategoria: 'Sirenas y Parlantes'},
     {NombreCategoria: 'Swicht'}
   ];
-
-  titulo=""
-  accion=""
+  
+   //solicitar los datos asincrónicos del servicio y setearlos con el requerido por el formulario
   ngOnInit(): void {
     this.titulo=this.productoService.titulo
     this.accion=this.productoService.accion.value
@@ -68,7 +76,7 @@ export class RegistrarProductComponent implements OnInit{
       console.log(this.productoService.producto);
       this.ProductosForm.controls['nombreCategoria'].setValue(
         this.productoService.producto.nombreCategoria + '');
-      this.ProductosForm.controls['nombreProducto'].setValue(     //se setean con el mismo dato que requiero nombre producto
+      this.ProductosForm.controls['nombreProducto'].setValue(   //se setean con el mismo dato que requiero nombre producto
           this.productoService.producto.nombreProducto + '');
       this.ProductosForm.controls['idProducto'].setValue(
         this.productoService.producto.idProducto + '' );
@@ -81,38 +89,62 @@ export class RegistrarProductComponent implements OnInit{
       this.ProductosForm.controls['precioVenta'].setValue(
         this.productoService.producto.precioVenta );
       this.ProductosForm.controls['imagen'].setValue(
-        this.productoService.producto.imagen + '' );      
+        this.productoService.producto.imagen + '' );
+      
+        this.titulo = this.productoService.titulo;  // carga el titulo nombre///   
     }   
   }  
 
   //Boton para validar información del formulario de productos con la DB
-  onSubmit(): void {   
-    if(this.ProductosForm.valid){
-      this.infoProductos.nombreCategoria=this.ProductosForm.controls['nombreCategoria'].value
-      this.infoProductos.nombreProducto=this.ProductosForm.controls['nombreProducto'].value
-      this.infoProductos.idProducto=this.ProductosForm.controls['idProducto'].value
-      this.infoProductos.descripcion=this.ProductosForm.controls['descripcion'].value
-      this.infoProductos.marca=this.ProductosForm.controls['marca'].value
-      this.infoProductos.origen=this.ProductosForm.controls['origen'].value
-      this.infoProductos.precioVenta=this.ProductosForm.controls['precioVenta'].value
-      this.infoProductos.imagen=this.ProductosForm.controls['imagen'].value
-
-      this.api.Post("Productoes",this.infoProductos)
-     
+  async onSubmit(){
+    try{
+      if(this.ProductosForm.valid){
+        this.loading = true;
+        if(this.productoService.accion.value == "Editar Producto"){
+          this.infoProductos.nombreCategoria=this.ProductosForm.controls['nombreCategoria'].value
+          this.infoProductos.nombreProducto=this.ProductosForm.controls['nombreProducto'].value
+          this.infoProductos.idProducto=this.ProductosForm.controls['idProducto'].value
+          this.infoProductos.descripcion=this.ProductosForm.controls['descripcion'].value
+          this.infoProductos.marca=this.ProductosForm.controls['marca'].value
+          this.infoProductos.origen=this.ProductosForm.controls['origen'].value
+          this.infoProductos.precioVenta=this.ProductosForm.controls['precioVenta'].value
+          this.infoProductos.imagen=this.ProductosForm.controls['imagen'].value
+  
+          this.api.Update("Productoes", this.infoProductos.idProducto.toString(), this.infoProductos) //trae los datos para editar el producto (controlador Id y body)
+          Swal.fire(
+            'Los datos se han enviado!',
+            'Ya está actualizado!',
+            'success'
+          );
+        }else{
+          this.infoProductos.nombreCategoria=this.ProductosForm.controls['nombreCategoria'].value
+          this.infoProductos.nombreProducto=this.ProductosForm.controls['nombreProducto'].value
+          this.infoProductos.idProducto=this.ProductosForm.controls['idProducto'].value
+          this.infoProductos.descripcion=this.ProductosForm.controls['descripcion'].value
+          this.infoProductos.marca=this.ProductosForm.controls['marca'].value
+          this.infoProductos.origen=this.ProductosForm.controls['origen'].value
+          this.infoProductos.precioVenta=this.ProductosForm.controls['precioVenta'].value
+          this.infoProductos.imagen=this.ProductosForm.controls['imagen'].value
+  
+          this.api.Post("Productoes",this.infoProductos) // para crear el producto (controlador y body)
+          Swal.fire(
+            'Los datos se han registrado!',
+            'Ya está creado!',
+            'success'
+          );
+        }
+      }
+    } catch (err){
       Swal.fire(
-        'Los datos se han enviado!',
-        'Buen trabajo!',
-        'success'
-      );
-      
-    }else{
-      Swal.fire(
-        'Debe ingresar los datos requeridos!',
-        'Complete la información!',
+        'Hay problemas para cargar los datos!',
+        'Error en sistema!',
         'error'
       );
-
+    } finally{
+      this.loading = false;
     }
-    //alert('Thanks!');
+
   }
+  //alert('Thanks!');
+  
 }

@@ -31,6 +31,7 @@ export class LoginComponent {
     onSubmit(): void{
       if(this.loginForm.valid){
         this.api.login(this.loginForm.controls['usuario'].value, this.loginForm.controls['password'].value).then(res =>{
+          console.log(res)
 
 
   
@@ -41,7 +42,7 @@ export class LoginComponent {
             'error'
 
           )
-          console.log("error inicio de sesión");
+          console.log(err);
         })
       }
     }
