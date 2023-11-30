@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RestService } from 'src/app/Services/rest.service';
-import { MatButtonModule } from '@angular/material/button';
+//import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { RegistrarProductComponent } from '../Forms/registrar-product/registrar-product.component';
 //import { ProductosModel } from 'src/app/Models/ProductosModel';
@@ -66,7 +66,7 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     });
     dialogRef.afterClosed().subscribe(res =>{  //cerrar y limpiar el openDialog()
       console.log('The dialog was closed'+res);
-      this.ngOnInit();
+      this.ngOnInit();      
     });
   } 
 

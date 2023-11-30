@@ -24,12 +24,11 @@
       
       <!-- Contruyendo mi avatar -->
       <div class="icon">
-        <button mat-button [matMenuTriggerFor]="menu"><ngx-avatars class="my-avatar" name="{{email}}"  [round]="true"></ngx-avatars></button>
+        <button mat-button [matMenuTriggerFor]="menu"><ngx-avatars class="my-avatar" name="{{nombre}}"  [round]="true"></ngx-avatars></button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="cerrarSesion()"> Cerrar Sesión</button>
         </mat-menu>
-      </div>      
-            
+      </div> 
     </mat-toolbar>    
     <!-- Add Content Here -->
     <router-outlet></router-outlet>    
@@ -38,7 +37,9 @@
     <app-nosotros></app-nosotros>
     <app-crea-tu-cuenta></app-crea-tu-cuenta>
     <app-nuestros-clientes></app-nuestros-clientes>-->
-
-  </mat-sidenav-content>
-  
+    <div>
+      <img src="/assets/servicio.png" width="=700" height="750" alt="Advertencia"><br>Primeros en Señalización
+    </div>
+  </mat-sidenav-content>    
 </mat-sidenav-container>
+

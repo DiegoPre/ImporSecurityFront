@@ -6,6 +6,7 @@ import { RestService } from 'src/app/Services/rest.service';
 import { ProductoService } from 'src/app/Services/Modal/producto.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { CategoriaModel } from 'src/app/Models/CategoriaModel';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-registrar-product',
@@ -18,6 +19,7 @@ export class RegistrarProductComponent implements OnInit{
     private fb: FormBuilder, 
     public api: RestService, 
     public productoService: ProductoService,
+    public dialogRef: MatDialog,
     private localStorageService: LocalStorageService ) {
       
       this.habilitado = localStorageService.getItem("isRegistered")
@@ -38,7 +40,7 @@ export class RegistrarProductComponent implements OnInit{
     marca: '',
     origen: '',
     precioVenta: 0,
-    imagen: ''
+    imagen: '',
   }
   
   //formulario de control
@@ -116,6 +118,8 @@ export class RegistrarProductComponent implements OnInit{
             'Ya está actualizado!',
             'success'
           );
+          this.dialogRef.closeAll()
+        
         }else{
           this.infoProductos.nombreCategoria=this.ProductosForm.controls['nombreCategoria'].value
           this.infoProductos.nombreProducto=this.ProductosForm.controls['nombreProducto'].value
@@ -132,6 +136,7 @@ export class RegistrarProductComponent implements OnInit{
             'Ya está creado!',
             'success'
           );
+          this.dialogRef.closeAll()
         }
       }
     } catch (err){

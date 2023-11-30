@@ -24,12 +24,16 @@ export class RestService {
   }
 //post crea el registro desde un formulario
   public async Post(controlador:string, body:any){
-    return await this.api.post(this.Ulr+controlador, body).subscribe((res)=>{});      
+    return await this.api.post(this.Ulr+controlador, body).subscribe((res)=>{
+      console.log(res);
+    });      
   }
   
 //actualiza información en DB
   public async Update(controlador:string, id: string, body:any){
-    return await this.api.put(this.Ulr+controlador+"/"+ id, body).toPromise().then((res)=>{});
+    return await this.api.put(this.Ulr+controlador+"/"+ id, body).toPromise().then((res)=>{
+      console.log(res);
+    });
       
   }
   

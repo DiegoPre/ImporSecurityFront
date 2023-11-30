@@ -9,5 +9,6 @@ export class ProductosModel {
     origen: string;
     precioVenta: number;
     imagen: string;
+   
 
 }

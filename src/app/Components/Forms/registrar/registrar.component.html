@@ -65,7 +65,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Ciudad" formControlName="ciudad">
             <mat-error *ngIf="UsuariosForm.controls['ciudad'].hasError('required')">
-              Ciudad es <strong>requerida</strong>
+              Ciudad es <strong> requerida</strong>
             </mat-error>
           </mat-form-field>
         </div>        
@@ -114,7 +114,5 @@
     </mat-card-actions>
   </mat-card>
 </form>
-<div class="botonRegresar">
-  <button [disabled]="!habilitado" (click)="realizarAccion()" color="primary"> Regresar</button>
-</div>
+
 </div>

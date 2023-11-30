@@ -1,23 +1,19 @@
-<div>
-    <app-menu></app-menu>
-     <H2>{{title}}</H2>
-</div>
-
-<!--<ng-container *ngIf="isLoggedIn; else loginTemplate">  
+<ng-container *ngIf="isLoggedIn; else loginTemplate">  
     <app-menu></app-menu>
     <H2>{{title}}</H2>
-</ng-container>   -->
+</ng-container>
 
-<!--
 <ng-template #loginTemplate>    
-    <div class="centrado">
-        <a mat-list-item href="./servicio.png" width="=800" height="600">Primeros en Señalización</a>  --><!--
-        <ng-container *ngIf= "isRegistered; else loginForm">
-            <app-registrar></app-registrar>
-        </ng-container>
+    <div class="centered-horizontal">
         
-        <ng-template #loginForm>
-            <app-login></app-login>
+        <ng-container *ngIf="isRegistered; else loginForm">
+            <app-registrar></app-registrar> 
+        </ng-container>
+
+        <ng-template #loginForm>            
+           <app-login></app-login>                             
         </ng-template>
     </div>
-</ng-template>  -->
+    
+</ng-template>  
+

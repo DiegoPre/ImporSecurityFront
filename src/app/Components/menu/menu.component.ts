@@ -13,12 +13,13 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent {
   email = 'unknow';
+  nombre ='unknow';
  // constructor(private localStorageService: LocalStorageService, private router: Router ){
    // this.nombre = localStorageService.getItem("nombre")
   //}
   constructor(private localStorageService: LocalStorageService, private router: Router) {
-    const storedNombre = localStorageService.getItem("email");
-    this.email = storedNombre !== null ? storedNombre : 'unknown';
+    this.email = localStorageService.getItem("email")
+    this.nombre = localStorageService.getItem("nombre")
   }
   
 
@@ -33,8 +34,6 @@ export class MenuComponent {
       this.localStorageService.setItem('isLoggedIn', false);
       this.localStorageService.setItem('isRegistered', false);
       this.router.navigate(['/']);
-      //location.reload();
-    }  
-
-
+      location.reload();
+    } 
 }

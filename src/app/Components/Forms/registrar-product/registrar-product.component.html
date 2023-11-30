@@ -8,8 +8,7 @@
     <mat-card-content>      
       
       <div class="row">
-        <div class="col">
-          
+        <div class="col">          
           <mat-form-field class="full-width">
             <mat-select placeholder="Categoria" formControlName="nombreCategoria">
               <mat-option *ngFor="let Categoria of cats" [value]="cats">
@@ -20,9 +19,8 @@
               Seleccione una Categoria, es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
-
-
         </div>
+        
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder=" Referencia del Producto" formControlName="idProducto">
@@ -75,6 +73,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Precio Venta" type="number" formControlName="precioVenta">
+            <mat-hint>ingrese el precio de venta</mat-hint>
             <mat-error *ngIf="ProductosForm.controls['precioVenta'].hasError('required')">
               El Precio de venta es <strong>obligatorio</strong>
             </mat-error>

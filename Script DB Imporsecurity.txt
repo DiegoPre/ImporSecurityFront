@@ -52,6 +52,10 @@ VALUES
     -- Agrega más filas de datos aquí
     ('1000', 3, 'US01', 'Producto 1', 'Descripción 1', 'Signal', 'Origen 3', 5, 50.00, 80.00, 0.02, 0.19, 'S', 'imagen1000.jpg');
 
+sales@criollo.com
+ventas@security-signal.com
+arturopre@hotmail.com
+
 ****VSCommunity
 
 Para conectar la DB Imporsecurity con el servidor ingresamos a la Terminal***** en Ver/Otras Ventanas/Consola de admon de paquetes

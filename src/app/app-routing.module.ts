@@ -7,6 +7,7 @@ import { NuestrosClientesComponent } from './Components/nuestros-clientes/nuestr
 import { ProductosComponent } from './Components/productos/productos.component';
 import { ProductComponent } from './Components/product/product.component';
 import { LoginComponent } from './Components/login/login.component';
+import { RegistrarComponent } from './Components/Forms/registrar/registrar.component';
 
 const routes: Routes = [
   {path:"CreaTuCuenta", component:CreaTuCuentaComponent},
@@ -16,7 +17,7 @@ const routes: Routes = [
   {path:"Productos", component:ProductosComponent},
   {path:"Product", component:ProductComponent},
   {path:"Login", component:LoginComponent},
-  
+  {path: "Registrar", component:RegistrarComponent},  
 ];
 
 @NgModule({

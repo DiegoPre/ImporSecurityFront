@@ -57,7 +57,7 @@ export class RegistrarComponent implements OnInit{
     ciudad: ["", Validators.required],
     pais: ["", Validators.required],
     telefono: ["", Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]+$')])],
-    email: ["", [Validators.required, Validators.email, Validators.pattern('^[0-9]+$')]],
+    email: ["", [Validators.required, Validators.email]],
     password: ["", Validators.required] , 
     
   });
@@ -114,6 +114,7 @@ export class RegistrarComponent implements OnInit{
             'Ya está actualizado!',
             'success'
           );
+          console.log()
         }else{
           this.infoUsuarios.IdUsuario = this.UsuariosForm.controls['idUsuario'].value
           this.infoUsuarios.TipoDocumento = this.UsuariosForm.controls['tipoDocumento'].value
@@ -153,3 +154,5 @@ export class RegistrarComponent implements OnInit{
   
  
 }
+
+
